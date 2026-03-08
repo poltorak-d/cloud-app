@@ -1,0 +1,12 @@
+flowchart LR
+    User[User / Browser]
+
+    FE[Frontend\nReact\nPort 5173]
+
+    BE[Backend API\nNode.js + Express\nPort 3000]
+
+    DB[(Azure SQL\nPort 1433)]
+
+    User -->|HTTP / HTTPS| FE
+    FE -->|REST API / JSON| BE
+    BE -->|SQL / TCP| DB
