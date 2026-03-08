@@ -1,0 +1,34 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: cloudapp-frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  backend:
+    build: ./backend
+    container_name: cloudapp-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: cloudapp
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    container_name: cloudapp-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cloudapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql

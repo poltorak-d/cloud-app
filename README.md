@@ -1,37 +1,120 @@
 # Cloud Task Manager
 
-by Dominik Półtorak  
-nr studenta: 96221
+Autor: Dominik Poltorak  
+Repozytorium: https://github.com/poltorak-d/cloud-app
+
+---
 
 ## Opis projektu
-Cloud Task Manager to aplikacja chmurowa do zarządzania zadaniami w modelu CRUD.
-Użytkownik może dodawać, przeglądać, edytować i usuwać zadania.
-Projekt jest rozwijany w architekturze 3-warstwowej i będzie uruchamiany lokalnie z wykorzystaniem Docker Compose.
+
+Cloud Task Manager to prosta aplikacja chmurowa do zarządzania zadaniami w modelu CRUD.  
+Użytkownik może dodawać oraz usuwać zadania z listy.
+
+Projekt wykorzystuje architekturę **3-warstwową**:
+
+- warstwa prezentacji (frontend)
+- warstwa logiki aplikacji (backend API)
+- warstwa danych (baza danych)
+
+Aplikacja została przygotowana do uruchamiania lokalnie przy użyciu **Docker Compose**.
+
+---
+
+## Architektura rozwiązania
+
+Aplikacja składa się z trzech głównych komponentów:
+
+### Frontend
+React + Vite
+
+Odpowiada za:
+- interfejs użytkownika
+- komunikację z backend API
+
+### Backend
+Node.js + Express
+
+Odpowiada za:
+- REST API
+- obsługę zapytań aplikacji
+- komunikację z bazą danych
+
+### Baza danych
+PostgreSQL
+
+Odpowiada za:
+- przechowywanie danych aplikacji
+
+---
 
 ## Stos technologiczny
-- Front-end: React 19 + Vite
-- Back-end: Node.js 24 + Express
-- Baza danych (docelowo w Azure): Azure SQL
-- Konteneryzacja: Docker, Docker Compose
-- Repozytorium kodu: GitHub
 
-## Architektura 3-warstwowa
-- Presentation Layer – React
-- Application Layer – Node.js + Express REST API
-- Data Layer – Azure SQL
+Frontend
+- React
+- Vite
+
+Backend
+- Node.js
+- Express
+
+Baza danych
+- PostgreSQL
+
+Konteneryzacja
+- Docker
+- Docker Compose
+
+Repozytorium kodu
+- GitHub
+
+---
 
 ## Mapowanie na usługi Azure
-| Warstwa systemu | Rozwiązanie projektowe | Usługa Azure |
+
+| Warstwa systemu | Rozwiązanie lokalne | Usługa Azure |
 |---|---|---|
-| Front-end | React 19 + Vite | Azure App Service |
-| Back-end | Node.js 24 + Express | Azure App Service |
-| Baza danych | Relacyjna baza danych | Azure SQL |
+| Frontend | React + Vite | Azure App Service |
+| Backend | Node.js + Express | Azure App Service |
+| Baza danych | PostgreSQL | Azure SQL |
+
+---
 
 ## Struktura projektu
-```text
+
 cloud-app/
-├── frontend/
-├── backend/
-├── database/
-├── docs/
-└── README.md
+frontend/
+backend/
+database/
+docs/
+README.md
+docker-compose.yml
+
+---
+
+## Uruchomienie lokalne
+
+W katalogu głównym projektu uruchom:
+
+docker compose up --build
+
+Po uruchomieniu aplikacja będzie dostępna pod adresami:
+
+Frontend  
+http://localhost:5173
+
+Backend health check  
+http://localhost:3000/api/health
+
+---
+
+## Status projektu
+
+- [x] Artefakt 1: Architektura i przygotowanie projektu
+- [x] Struktura katalogów
+- [x] Diagram architektury C4
+- [x] README projektu
+- [x] Artefakt 2: Środowisko wielokontenerowe Docker
+- [x] Backend API
+- [x] Frontend React
+- [x] Baza danych PostgreSQL
+- [x] Uruchomienie aplikacji w Docker Compose
