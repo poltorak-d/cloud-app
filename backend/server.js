@@ -1,37 +1,27 @@
 const express = require("express");
 const cors = require("cors");
-const { Pool } = require("pg");
+const taskController = require("./Controllers/taskController");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-const pool = new Pool({
-  host: process.env.DB_HOST || "db",
-  port: process.env.DB_PORT || 5432,
-  user: process.env.DB_USER || "postgres",
-  password: process.env.DB_PASSWORD || "postgres",
-  database: process.env.DB_NAME || "cloudapp"
-});
+app.get("/api/health", taskController.getHealth);
 
-app.get("/api/health", async (req, res) => {
-  const result = await pool.query("SELECT NOW()");
-  res.json({ status: "ok", time: result.rows[0].now });
-});
+app.get("/api/tasks", taskController.getAllTasks);
+app.get("/api/tasks/:id", taskController.getTaskById);
+app.post("/api/tasks", taskController.createTask);
+app.put("/api/tasks/:id", taskController.updateTask);
+app.delete("/api/tasks/:id", taskController.deleteTask);
 
-app.get("/api/tasks", async (req, res) => {
-  const result = await pool.query("SELECT * FROM tasks ORDER BY id ASC");
-  res.json(result.rows);
-});
+app.use((error, req, res, next) => {
+  console.error(error);
 
-app.post("/api/tasks", async (req, res) => {
-  const { title } = req.body;
-  const result = await pool.query(
-    "INSERT INTO tasks (title) VALUES ($1) RETURNING *",
-    [title]
-  );
-  res.json(result.rows[0]);
+  const status = error.status || 500;
+  const message = error.message || "Internal server error";
+
+  res.status(status).json({ message });
 });
 
 app.listen(8081, () => {
