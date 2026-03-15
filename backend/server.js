@@ -34,6 +34,6 @@ app.post("/api/tasks", async (req, res) => {
   res.json(result.rows[0]);
 });
 
-app.listen(3000, () => {
-  console.log("Backend running on port 3000");
+app.listen(8081, () => {
+  console.log("Backend running on port 8081");
 });

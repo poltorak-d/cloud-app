@@ -3,7 +3,7 @@ services:
     build: ./frontend
     container_name: cloudapp-frontend
     ports:
-      - "5173:5173"
+      - "8080:80"
     depends_on:
       - backend
 
@@ -11,7 +11,7 @@ services:
     build: ./backend
     container_name: cloudapp-backend
     ports:
-      - "3000:3000"
+      - "8081:8081"
     environment:
       DB_HOST: db
       DB_PORT: 5432
