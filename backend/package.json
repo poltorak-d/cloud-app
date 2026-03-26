@@ -4,7 +4,8 @@
   "description": "Cloud Task Manager API",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate": "node runMigrations.js"
   },
   "author": "",
   "license": "ISC",

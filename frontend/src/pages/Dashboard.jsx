@@ -3,10 +3,22 @@ import api from "../services/api";
 
 function Dashboard() {
   const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
   const loadTasks = async () => {
     const response = await api.get("/tasks");
     setTasks(response.data);
+  };
+
+  const addTask = async () => {
+    if (!newTask.trim()) return;
+
+    await api.post("/tasks", {
+      title: newTask,
+    });
+
+    setNewTask("");
+    loadTasks();
   };
 
   useEffect(() => {
@@ -16,6 +28,16 @@ function Dashboard() {
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Cloud Task Manager</h1>
+
+      <div style={{ marginBottom: "1rem" }}>
+        <input
+          type="text"
+          placeholder="Wpisz nowe zadanie..."
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button onClick={addTask}>Dodaj</button>
+      </div>
 
       <ul>
         {tasks.map((task) => (

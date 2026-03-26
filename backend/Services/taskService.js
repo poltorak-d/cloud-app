@@ -1,11 +1,15 @@
 const taskRepository = require("../Repositories/taskRepository");
-
+const { mapToTaskReadDto } = require("../DTO/taskReadDto");
 const getAllTasks = async () => {
-  return await taskRepository.getAllTasks();
+  const tasks = await taskRepository.getAllTasks();
+  return tasks.map(mapToTaskReadDto);
 };
 
 const getTaskById = async (id) => {
-  return await taskRepository.getTaskById(id);
+  const task = await taskRepository.getTaskById(id);
+  if (!task) return null;
+
+  return mapToTaskReadDto(task);
 };
 
 const createTask = async (title) => {
