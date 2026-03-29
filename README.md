@@ -1,120 +1,157 @@
 # Cloud Task Manager
 
-Autor: Dominik Poltorak  
+Autor: Dominik Poltorak
 Repozytorium: https://github.com/poltorak-d/cloud-app
 
 ---
 
 ## Opis projektu
 
-Cloud Task Manager to prosta aplikacja chmurowa do zarządzania zadaniami w modelu CRUD.  
-Użytkownik może dodawać oraz usuwać zadania z listy.
+Cloud Task Manager to aplikacja chmurowa do zarządzania zadaniami w modelu CRUD.
+Użytkownik może dodawać oraz usuwać zadania z poziomu aplikacji webowej.
 
-Projekt wykorzystuje architekturę **3-warstwową**:
-
-- warstwa prezentacji (frontend)
-- warstwa logiki aplikacji (backend API)
-- warstwa danych (baza danych)
-
-Aplikacja została przygotowana do uruchamiania lokalnie przy użyciu **Docker Compose**.
+Projekt został rozwinięty do architektury chmurowej i wdrożony z wykorzystaniem usług AWS.
 
 ---
 
 ## Architektura rozwiązania
 
-Aplikacja składa się z trzech głównych komponentów:
+Aplikacja składa się z trzech głównych warstw:
 
 ### Frontend
+
 React + Vite
 
-Odpowiada za:
-- interfejs użytkownika
-- komunikację z backend API
+* interfejs użytkownika
+* komunikacja z backend API
 
 ### Backend
+
 Node.js + Express
 
-Odpowiada za:
-- REST API
-- obsługę zapytań aplikacji
-- komunikację z bazą danych
+* REST API
+* logika aplikacji
+* komunikacja z bazą danych
 
 ### Baza danych
+
 PostgreSQL
 
-Odpowiada za:
-- przechowywanie danych aplikacji
+* przechowywanie danych aplikacji
 
 ---
 
 ## Stos technologiczny
 
-Frontend
-- React
-- Vite
+Frontend:
 
-Backend
-- Node.js
-- Express
+* React
+* Vite
 
-Baza danych
-- PostgreSQL
+Backend:
 
-Konteneryzacja
-- Docker
-- Docker Compose
+* Node.js
+* Express
 
-Repozytorium kodu
-- GitHub
+Baza danych:
+
+* PostgreSQL
+
+DevOps:
+
+* Docker
+* Docker Compose
+* AWS (RDS, EC2)
+
+Repozytorium:
+
+* GitHub
 
 ---
 
-## Mapowanie na usługi Azure
+## Architektura chmurowa (AWS)
 
-| Warstwa systemu | Rozwiązanie lokalne | Usługa Azure |
-|---|---|---|
-| Frontend | React + Vite | Azure App Service |
-| Backend | Node.js + Express | Azure App Service |
-| Baza danych | PostgreSQL | Azure SQL |
+| Warstwa systemu | Rozwiązanie lokalne | AWS            |
+| --------------- | ------------------- | -------------- |
+| Frontend        | React + Vite        | lokalnie (dev) |
+| Backend         | Node.js + Express   | EC2            |
+| Baza danych     | PostgreSQL          | AWS RDS        |
+
+---
+
+## Wdrożenie w chmurze
+
+### Baza danych (AWS RDS)
+
+* PostgreSQL
+* dostęp zabezpieczony przez Security Group (firewall)
+* dostęp tylko z wybranych adresów IP
+
+### Backend (AWS EC2)
+
+* Node.js uruchomiony na serwerze Ubuntu
+* dostęp publiczny przez:
+  http://3.236.128.77:8081/api/health
+
+### Frontend
+
+* uruchamiany lokalnie (Vite)
+* korzysta z produkcyjnego API (AWS EC2)
 
 ---
 
 ## Struktura projektu
 
 cloud-app/
-frontend/
-backend/
-database/
-docs/
-README.md
-docker-compose.yml
+├── frontend/
+├── backend/
+├── database/
+├── docs/
+├── README.md
+└── docker-compose.yml
 
 ---
 
 ## Uruchomienie lokalne
 
-W katalogu głównym projektu uruchom:
+W katalogu głównym projektu:
 
 docker compose up --build
 
-Po uruchomieniu aplikacja będzie dostępna pod adresami:
-
-Frontend  
+Frontend:
 http://localhost:5173
 
-Backend health check  
-http://localhost:3000/api/health
+Backend:
+http://localhost:8081/api/health
+
+---
+
+## Uruchomienie z backendem AWS
+
+W pliku `frontend/.env`:
+
+VITE_API_URL=http://3.236.128.77:8081
+
+---
+
+## Funkcjonalności
+
+* wyświetlanie listy zadań
+* dodawanie zadań (React UI)
+* usuwanie zadań
+* REST API
+* DTO (oddzielenie modelu od API)
+* migracje bazy danych
+* trwałość danych (Docker volume)
+* integracja z bazą w chmurze (AWS RDS)
 
 ---
 
 ## Status projektu
 
-- [x] Artefakt 1: Architektura i przygotowanie projektu
-- [x] Struktura katalogów
-- [x] Diagram architektury C4
-- [x] README projektu
-- [x] Artefakt 2: Środowisko wielokontenerowe Docker
-- [x] Backend API
-- [x] Frontend React
-- [x] Baza danych PostgreSQL
-- [x] Uruchomienie aplikacji w Docker Compose
+* [x] Artefakt 1: Architektura
+* [x] Artefakt 2: Docker
+* [x] Artefakt 3: Frontend
+* [x] Artefakt 4: Backend API
+* [x] Artefakt 5: Gotowość do chmury
+* [x] Artefakt 6: Wdrożenie w chmurze (AWS)
