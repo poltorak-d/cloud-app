@@ -16,8 +16,8 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: cloudapp
+      DB_PASSWORD: 87654321
+      DB_NAME: postgres
     depends_on:
       - db
 
@@ -27,9 +27,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: cloudapp
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: 87654321
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql

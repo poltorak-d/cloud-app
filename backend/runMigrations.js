@@ -7,7 +7,10 @@ const pool = new Pool({
   port: process.env.DB_PORT || 5432,
   user: process.env.DB_USER || "postgres",
   password: process.env.DB_PASSWORD || "postgres",
-  database: process.env.DB_NAME || "cloudapp"
+  database: process.env.DB_NAME || "cloudapp",
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 const runMigrations = async () => {
