@@ -21,6 +21,11 @@ function Dashboard() {
     loadTasks();
   };
 
+  const deleteTask = async (id) => {
+    await api.delete(`/tasks/${id}`);
+    loadTasks();
+  };
+
   useEffect(() => {
     loadTasks();
   }, []);
@@ -41,7 +46,10 @@ function Dashboard() {
 
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>{task.title}</li>
+          <li key={task.id}>
+            {task.title}{" "}
+            <button onClick={() => deleteTask(task.id)}>Usuń</button>
+          </li>
         ))}
       </ul>
     </div>

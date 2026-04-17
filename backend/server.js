@@ -24,6 +24,11 @@ app.use((error, req, res, next) => {
   res.status(status).json({ message });
 });
 
-app.listen(8081, () => {
-  console.log("Backend running on port 8081");
-});
+// 🔴 TO JEST KLUCZOWE
+if (require.main === module) {
+  app.listen(8081, () => {
+    console.log("Backend running on port 8081");
+  });
+}
+
+module.exports = app;
