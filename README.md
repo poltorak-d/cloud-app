@@ -155,3 +155,29 @@ VITE_API_URL=http://3.236.128.77:8081
 * [x] Artefakt 4: Backend API
 * [x] Artefakt 5: Gotowość do chmury
 * [x] Artefakt 6: Wdrożenie w chmurze (AWS)
+* [x] Artefakt 8– Testowanie i automatyzacja
+
+W ramach Artefaktu 8 dodano:
+
+- test jednostkowy `NewTask_ShouldNotBeCompleted`
+- test API endpointu `GET /api/tasks`
+- workflow GitHub Actions do automatycznego wdrażania frontendu na AWS EC2
+- funkcję usuwania zadania z poziomu interfejsu użytkownika
+- test wdrożenia po `git push` z widoczną zmianą koloru i interfejsu
+
+### Automatyzacja wdrożenia
+Po wysłaniu zmian do gałęzi `main` GitHub Actions:
+- buduje frontend
+- łączy się z instancją EC2
+- kopiuje pliki do katalogu serwowanego przez nginx
+- restartuje nginx
+
+### Testy
+Backend zawiera:
+- test jednostkowy w `CloudTask.test.js`
+- test API w `api.test.js`
+
+### Nowa funkcja
+Frontend umożliwia:
+- dodawanie zadania
+- usuwanie zadania
