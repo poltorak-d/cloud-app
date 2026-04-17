@@ -33,9 +33,14 @@ jobs:
           echo "${{ secrets.EC2_SSH_KEY }}" > cloud-task-vpc.pem
           chmod 600 cloud-task-vpc.pem
 
-      - name: Copy frontend files to EC2
+      - name: Copy frontend files to EC2 home
         run: |
-          scp -o StrictHostKeyChecking=no -i cloud-task-vpc.pem -r frontend/dist/* ubuntu@18.185.38.101:/var/www/frontend/
+          ssh -o StrictHostKeyChecking=no -i cloud-task-vpc.pem ubuntu@18.185.38.101 "rm -rf ~/frontend-upload && mkdir -p ~/frontend-upload"
+          scp -o StrictHostKeyChecking=no -i cloud-task-vpc.pem -r frontend/dist/* ubuntu@18.185.38.101:~/frontend-upload/
+
+      - name: Move frontend files to nginx directory
+        run: |
+          ssh -o StrictHostKeyChecking=no -i cloud-task-vpc.pem ubuntu@18.185.38.101 "sudo rm -rf /var/www/frontend/* && sudo cp -r ~/frontend-upload/* /var/www/frontend/"
 
       - name: Restart nginx
         run: |
