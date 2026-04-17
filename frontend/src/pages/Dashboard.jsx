@@ -31,8 +31,8 @@ function Dashboard() {
   }, []);
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Cloud Task Manager</h1>
+    <div style={{ padding: "2rem", backgroundColor: "#dbeafe", minHeight: "100vh" }}>
+      <h1 style={{ color: "#1d4ed8" }}>Cloud Task Manager</h1>
 
       <div style={{ marginBottom: "1rem" }}>
         <input
@@ -41,7 +41,7 @@ function Dashboard() {
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
         />
-        <button onClick={addTask}>Dodaj</button>
+        <button onClick={addTask}>Dodaj zadanie</button>
       </div>
 
       <ul>
